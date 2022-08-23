@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+<h5>{{message}}</h5>
+
+<div class = "card shadow m-5">
+    <div class = "card-body">
+       
+        <h5 style = "border-bottom : 2px solid orange"> Signin to your account</h5>
+
+        <div class="container-fluid">
+            <form  method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                
+                
+
+                    <div class="col-sm-6">
+                        <div class="form-group m-2" >
+                            <label>Email</label>
+                            <input type="email" name="email" class="form-control" placeholder="Email"  required>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group m-2" >
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password"  required>
+                        </div>
+                    </div>
+                    
+                    <input type="submit" value="Login" class="m-2 px-3 btn btn-primary">
+                    <a class="nav-link" href="#">Forget Password</a>
+
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
