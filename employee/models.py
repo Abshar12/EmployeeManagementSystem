@@ -61,7 +61,7 @@ class Role(models.Model):
         return self.name
          
 class MyUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self,role, email, date_of_birth, password=None):
         
         if not email:
             raise ValueError('Users must have an email address')
@@ -69,15 +69,16 @@ class MyUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             date_of_birth=date_of_birth,
+            role=role
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email,date_of_birth,password=None,):
+    def create_superuser(self,role, email,date_of_birth,password=None,):
        
-        user = self.create_user(email,password=password,date_of_birth=date_of_birth,)
+        user = self.create_user(email,password=password,date_of_birth=date_of_birth,role=role)
         user.is_admin = True
         user.save(using=self._db)
         return user
