@@ -21,6 +21,7 @@ def admin_login(request):
         print ( user is not None)
         if user is not None:
             login(request,user)
+            
             return render(request,'welcome.html')
 
         
@@ -28,4 +29,8 @@ def admin_login(request):
         return render(request,'admin_login.html')
     
     return render(request,'admin_login.html')
+
+
+def admin_logout(request):
+    logout(request)
 
