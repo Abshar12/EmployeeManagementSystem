@@ -41,4 +41,14 @@ def add_Employee(request):
         form = EmployeeAdd(request.POST)
         if form.is_valid():
             form.save()
-    return render(request,'add_employee.html',{'form':form})
+            form=EmployeeAdd()
+        else:
+            form=EmployeeAdd()
+    show=Employee.objects.all()
+    return render(request,'add_employee.html',{'form':form,'stu':show})
+
+# def edit_employee(request):
+#     form=EmployeeAdd()
+#     show=Employee.objects.all()
+#     return render(request,'add_employee.html',
+
