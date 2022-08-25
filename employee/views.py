@@ -4,6 +4,7 @@ from django.contrib.auth import logout , authenticate , login
 from django.shortcuts import render , redirect
 from cryptography.fernet import Fernet
 from django.contrib.auth.models import User
+from .forms import EmployeeAdd
 
 # Create your views here.
 
@@ -34,3 +35,10 @@ def admin_login(request):
 def admin_logout(request):
     logout(request)
 
+def add_Employee(request):
+    form = EmployeeAdd()
+    if request.method=='POST':
+        form = EmployeeAdd(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request,'add_employee.html',{'form':form})
