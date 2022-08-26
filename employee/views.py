@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
-from django.shortcuts import render , redirect,HttpResponseRedirect
+from django.shortcuts import render , redirect,HttpResponseRedirect,HttpResponse
 from cryptography.fernet import Fernet
 from django.contrib.auth.models import User
 from .forms import EmployeeAdd
@@ -56,4 +56,6 @@ def add_Employee(request):
 def delete(request,id):
     employee = Employee.objects.get(pk=id)
     employee.delete()
+    # return render(request,'add_employee.html')
     return render(request,'add_employee.html')
+    # return HttpResponse(request,"record deleted successfully")
