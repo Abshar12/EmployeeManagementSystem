@@ -24,4 +24,5 @@ urlpatterns = [
     path('adminLogin' ,admin_login , name = 'adminLogin'),
     path('adminLogout', admin_logout , name='adminLogout'),
     path('adminLogin/addemployee',add_Employee,name='addEmployee'),
+    path('adminLogin/addemployee/delete/<int:id>', delete, name='delete'),
 ]

@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect,HttpResponseRedirect
 from cryptography.fernet import Fernet
 from django.contrib.auth.models import User
 from .forms import EmployeeAdd
+from django.urls import reverse
 
 # Create your views here.
 
@@ -52,3 +53,7 @@ def add_Employee(request):
 #     show=Employee.objects.all()
 #     return render(request,'add_employee.html',
 
+def delete(request,id):
+    employee = Employee.objects.get(pk=id)
+    employee.delete()
+    return render(request,'add_employee.html')
