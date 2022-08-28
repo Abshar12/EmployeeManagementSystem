@@ -1,3 +1,4 @@
+from http.client import REQUESTED_RANGE_NOT_SATISFIABLE
 from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
@@ -48,14 +49,16 @@ def add_Employee(request):
     show=Employee.objects.all()
     return render(request,'add_employee.html',{'form':form,'stu':show})
 
-# def edit_employee(request):
-#     form=EmployeeAdd()
-#     show=Employee.objects.all()
-#     return render(request,'add_employee.html',
 
+
+# def delete(request,id):
+#     employee = Employee.objects.get(pk=id)
+#     employee.delete()
+    
+#     # return render(request,'add_employee.html')
+#     return render (request,'add_employee.html'),
 def delete(request,id):
-    employee = Employee.objects.get(pk=id)
-    employee.delete()
-    # return render(request,'add_employee.html')
-    return render(request,'add_employee.html')
-    # return HttpResponse(request,"record deleted successfully")
+    if request.method == 'POST':
+        pi = Employee.objects.get(pk=id)
+        pi.delete()
+        return HttpResponseRedirect('/adminLogin/addemployee/')

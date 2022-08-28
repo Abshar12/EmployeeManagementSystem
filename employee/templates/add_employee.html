@@ -51,10 +51,13 @@
                             <td>{{st.is_deleted}}</td>
                             <td>
                                 <input type="button" data-sid="{{st.id}}" class="btn btn-warning btn-sm" value="Edit">
+                                <form action="{% url 'delete' st.id %}" method="POST" class="d-inline">{%csrf_token%}
+                                    <input type="Submit" class="btn btn-danger" value="Delete">
+                                </form>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <td><a href="addemployee/delete/{{ st.id }}">delete</a></td>
-                            </td>
+                            </td> -->
                         </tr>
                     {% endfor %}
                 </tbody>
