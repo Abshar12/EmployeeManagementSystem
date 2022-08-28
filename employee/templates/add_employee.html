@@ -50,7 +50,7 @@
                             <td>{{st.city}}</td>
                             <td>{{st.is_deleted}}</td>
                             <td>
-                                <input type="button" data-sid="{{st.id}}" class="btn btn-warning btn-sm" value="Edit">
+                                <a href="{% url 'update' st.id %}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{% url 'delete' st.id %}" method="POST" class="d-inline">{%csrf_token%}
                                     <input type="Submit" class="btn btn-danger" value="Delete">
                                 </form>

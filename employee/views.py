@@ -61,4 +61,16 @@ def delete(request,id):
     if request.method == 'POST':
         pi = Employee.objects.get(pk=id)
         pi.delete()
-        return HttpResponseRedirect('/adminLogin/addemployee/')
+        return HttpResponseRedirect('/adminLogin/addemployee/') 
+
+
+def update(request,id):
+    if request.method =='POST':
+        pi = Employee.objects.get(pk=id)
+        form = EmployeeAdd(request.POST , instance=pi)
+        form.is_valid()
+        form.save()
+    else:
+        pi = Employee.objects.get(pk=id)
+        form = EmployeeAdd(instance=pi) 
+    return render(request,'edit_employees.html',{'form':form})
