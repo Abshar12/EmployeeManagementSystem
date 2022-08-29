@@ -1,18 +1,18 @@
-from http.client import REQUESTED_RANGE_NOT_SATISFIABLE
 from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
-from django.shortcuts import render , redirect,HttpResponseRedirect,HttpResponse
-from cryptography.fernet import Fernet
-from django.contrib.auth.models import User
+from django.shortcuts import render ,HttpResponseRedirect,redirect
 from .forms import EmployeeAdd
-from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
 
 
 def index(request):
     return render(request , 'index.html')
+
 
 
 def admin_login(request):
@@ -34,9 +34,13 @@ def admin_login(request):
     return render(request,'admin_login.html')
 
 
+
+
 def admin_logout(request):
     logout(request)
 
+
+@login_required(login_url='/')
 def add_Employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
@@ -51,17 +55,14 @@ def add_Employee(request):
 
 
 
-# def delete(request,id):
-#     employee = Employee.objects.get(pk=id)
-#     employee.delete()
-    
-#     # return render(request,'add_employee.html')
-#     return render (request,'add_employee.html'),
+
 def delete(request,id):
     if request.method == 'POST':
         pi = Employee.objects.get(pk=id)
         pi.delete()
-        return HttpResponseRedirect('/adminLogin/addemployee/') 
+        return redirect('addEmployee') 
+
+
 
 
 def update(request,id):

@@ -20,10 +20,10 @@ from employee.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index , name='index'),
-    path('adminLogin' ,admin_login , name = 'adminLogin'),
+    # path('', index , name='index'),
+    path('' ,admin_login , name = 'adminLogin'),
     path('adminLogout', admin_logout , name='adminLogout'),
-    path('adminLogin/addemployee',add_Employee,name='addEmployee'),
-    path('adminLogin/addemployee/delete/<int:id>', delete, name='delete'),
+    path('addemployee',add_Employee,name='addEmployee'),
+    path('delete/<int:id>', delete, name='delete'),
     path('<int:id>',update,name='update')
 ]
