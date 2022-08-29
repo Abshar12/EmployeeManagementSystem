@@ -5,6 +5,7 @@ from django.shortcuts import render ,HttpResponseRedirect,redirect
 from .forms import EmployeeAdd
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 
@@ -50,13 +51,16 @@ def add_Employee(request):
             form.save()
             messages.success(request,"Employee added successfully")
             form=EmployeeAdd()
-            
+        
         else:
             form=EmployeeAdd()
             
     show=Employee.objects.all()
-
-    return render(request,'add_employee.html',{'form':form,'stu':show})
+    p = Paginator(Employee.objects.all(),2)
+    page = request.GET.get('page')
+    Emp = p.get_page(page)
+    # return render(request,'add_employee.html',{'form':form,'stu':show})
+    return render(request,'add_employee.html',{'form':form,'Emp':Emp})
 
 
 

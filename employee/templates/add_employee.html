@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for st in stu %}
+                    {% for st in Emp %}
                         <tr>
                             <td>{{st.id}}</td>
                             <td>{{st.first_name}}</td>
@@ -69,6 +69,35 @@
                             </td> -->
                         </tr>
                     {% endfor %}
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            {% if Emp.has_previous%}
+                          <li class="page-item">
+                            <a class="page-link" href="?page=1" tabindex="-1">First</a>
+                          </li>
+                          <li class="page-item">
+                            <a class="page-link" href="?page={{Emp.previous_page_number}}" tabindex="-1">Previous</a>
+                          </li>
+                          {%  endif %}
+                          
+                          {% if Emp.has_next%}
+                          <li class="page-item">
+                            <a class="page-link" href="?page={{Emp.next_page_number}}">Next</a>
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </nav>
+                    <!-- {% if Emp.has_previous %}
+                    
+                    <a href="?page={{Emp.previous_page_number}}">Previous</a>
+                    {% endif %}
+
+                    Page {{Emp.number}} of {{Emp.Paginator.num_pages}}
+
+                    {% if Emp.has_next %}
+                    <a href="?page={{Emp.next_page_number}}">Next</a>
+
+                    {% endif %} -->
                 </tbody>
             </table>
         </div>

@@ -38,7 +38,7 @@ class Employee(models.Model):
     first_name = models.CharField (max_length=50)
     last_name = models.CharField (max_length=50)
     gender = models.ForeignKey(Gender, on_delete=models.CASCADE , null=True)
-    email = models.CharField (max_length=50)
+    email = models.CharField (max_length=50, unique=True)
     password = models.CharField (max_length=800)
     address = models.CharField (max_length=50)
     country = models.ForeignKey(Country ,on_delete=models.SET_NULL , null=True)
