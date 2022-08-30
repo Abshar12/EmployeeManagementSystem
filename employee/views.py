@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
 from django.shortcuts import render ,HttpResponseRedirect,redirect
-from .forms import EmployeeAdd
+from .forms import AdminAdd, EmployeeAdd
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -42,7 +42,7 @@ def admin_logout(request):
     logout(request)
 
 
-
+@login_required
 def add_Employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
@@ -62,7 +62,11 @@ def add_Employee(request):
     # return render(request,'add_employee.html',{'form':form,'stu':show})
     return render(request,'add_employee.html',{'form':form,'Emp':Emp})
 
-
+def add_admin(request):
+    
+    show=Admin.objects.all()
+    
+    return render(request,'add_admin.html',{'stu':show})
 
 
 def delete(request,id):

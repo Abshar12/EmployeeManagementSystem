@@ -28,6 +28,7 @@ urlpatterns = [
     path('addemployee',add_Employee,name='addEmployee'),
     path('delete/<int:id>', delete, name='delete'),
     path('<int:id>',update,name='update'),
+    path('addAdmin',add_admin,name='addAdmin'),
     path('resetPassword',auth_views.PasswordResetView.as_view(),name='reset_password'),
     path('resetPassword_sent',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
     path('reset/<uidb64>/token/',auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),

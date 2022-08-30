@@ -10,3 +10,8 @@ class EmployeeAdd(forms.ModelForm):
     #     super().__init__(*args,**kwargs)
     #     self.fields['state'].queryset = State.objects.none()
 
+class AdminAdd(forms.ModelForm):
+    class Meta:
+        model = Admin
+        fields = '__all__'
+
