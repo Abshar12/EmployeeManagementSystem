@@ -127,6 +127,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#SMTP Configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.mailnest.io'
 EMAIL_PORT = 2525
 EMAIL_HOST_USER = 'qzdmv62rjcwq62@mailnest.io' 

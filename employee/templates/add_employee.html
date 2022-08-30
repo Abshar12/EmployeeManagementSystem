@@ -63,7 +63,7 @@
                             <td>
                                 <a href="{% url 'update' st.id %}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{% url 'delete' st.id %}" method="POST" class="d-inline">{%csrf_token%}
-                                    <input type="Submit" class="btn btn-danger" value="Delete">
+                                    <input type="Submit" class="btn btn-danger del" value="Delete">
                                 </form>
                             </td>
                             <!-- <td>
@@ -104,6 +104,15 @@
             </table>
         </div>
     </div>
+<script>
+    $(document).ready(function(){
+        $(".del").click(function(){
+          if (!confirm("Do you want to delete")){
+            return false;
+          }
+        });
+      });
+</script>
 </body>
 
 <!-- <div class="card shadow m-5">
