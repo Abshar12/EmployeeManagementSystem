@@ -62,11 +62,32 @@ def add_Employee(request):
     # return render(request,'add_employee.html',{'form':form,'stu':show})
     return render(request,'add_employee.html',{'form':form,'Emp':Emp})
 
+# def add_admin(request):
+    
+#     show=Admin.objects.all()
+    
+#     return render(request,'add_admin.html',{'stu':show})
+
 def add_admin(request):
-    
+    form = AdminAdd()
+    if request.method=='POST':
+        form = AdminAdd(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Admin added successfully")
+            form=AdminAdd()
+        
+        else:
+            form=AdminAdd()
+            
     show=Admin.objects.all()
-    
-    return render(request,'add_admin.html',{'stu':show})
+    p = Paginator(Admin.objects.all(),2)
+    page = request.GET.get('page')
+    Adm = p.get_page(page)
+    # return render(request,'add_employee.html',{'form':form,'stu':show})
+    return render(request,'add_admin.html',{'form':form,'Adm':Adm})
+
+
 
 
 def delete(request,id):
