@@ -62,14 +62,9 @@ def show_employee(request):
     p = Paginator(Employee.objects.all(),2)
     page = request.GET.get('page')
     Emp = p.get_page(page)
-    # return render(request,'add_employee.html',{'form':form,'stu':show})
-    return render(request,'show.html',{'Emp':Emp})
+    return render(request,'show_emp.html',{'Emp':Emp})
 
-# def add_admin(request):
-    
-#     show=Admin.objects.all()
-    
-#     return render(request,'add_admin.html',{'stu':show})
+
 
 def add_admin(request):
     form = AdminAdd()
@@ -82,13 +77,15 @@ def add_admin(request):
         
         else:
             form=AdminAdd()
-            
+    return render(request,'add_admin.html',{'form':form})
+
+def show_admin(request):
     show=Admin.objects.all()
     p = Paginator(Admin.objects.all(),2)
     page = request.GET.get('page')
     Adm = p.get_page(page)
     # return render(request,'add_employee.html',{'form':form,'stu':show})
-    return render(request,'add_admin.html',{'form':form,'Adm':Adm})
+    return render(request,'show_admin.html',{'Adm':Adm})
 
 
 

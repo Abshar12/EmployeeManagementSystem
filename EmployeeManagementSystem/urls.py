@@ -29,7 +29,9 @@ urlpatterns = [
     path('delete/<int:id>', delete, name='delete'),
     path('<int:id>',update,name='update'),
     path('addAdmin',add_admin,name='addAdmin'),
-    path('show',show_employee,name='show')
+    path('showemp',show_employee,name='showemp'),
+    path('showadm',show_admin,name='showadm')
+
 
 
 ]
