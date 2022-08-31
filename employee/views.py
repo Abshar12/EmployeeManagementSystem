@@ -54,13 +54,16 @@ def add_Employee(request):
         
         else:
             form=EmployeeAdd()
-            
+    return render(request,'add_employee.html',{'form':form})
+
+
+def show_employee(request):   
     show=Employee.objects.all()
     p = Paginator(Employee.objects.all(),2)
     page = request.GET.get('page')
     Emp = p.get_page(page)
     # return render(request,'add_employee.html',{'form':form,'stu':show})
-    return render(request,'add_employee.html',{'form':form,'Emp':Emp})
+    return render(request,'show.html',{'Emp':Emp})
 
 # def add_admin(request):
     
@@ -95,7 +98,7 @@ def delete(request,id):
         pi = Employee.objects.get(pk=id)
         pi.delete()
         messages.success(request,"Employee deleted successfully")
-        return redirect('addEmployee') 
+        return redirect('show') 
 
 
 
