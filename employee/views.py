@@ -42,7 +42,7 @@ def admin_logout(request):
     logout(request)
 
 
-@login_required
+@login_required(login_url="/")
 def add_Employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
@@ -90,17 +90,25 @@ def show_admin(request):
 
 
 
-def delete(request,id):
+def delete_emp(request,id):
     if request.method == 'POST':
         pi = Employee.objects.get(pk=id)
         pi.delete()
         messages.success(request,"Employee deleted successfully")
-        return redirect('show') 
+        return redirect('showemp') 
 
 
+def delete_adm(request,id):
+    if request.method == 'POST':
+        pi = Admin.objects.get(pk=id)
+        pi.delete()
+        messages.success(request,"Admin deleted successfully")
+        return redirect('showadm')
+
+    
 
 
-def update(request,id):
+def update_emp(request,id):
     if request.method =='POST':
         pi = Employee.objects.get(pk=id)
         form = EmployeeAdd(request.POST , instance=pi)
@@ -111,4 +119,16 @@ def update(request,id):
         pi = Employee.objects.get(pk=id)
         form = EmployeeAdd(instance=pi) 
     return render(request,'edit_employees.html',{'form':form})
+
+
+def update_adm(request,id):
+    if request.method == 'POST':
+        pi = Admin.objects.get(pk=id)
+        form = AdminAdd(request.POST,instance=pi)
+        form.is_valid()
+        form.save()
+    else:
+        pi = Admin.objects.get(pk=id)
+        form = AdminAdd(instance=pi)
+    return render (request ,'edit_admin.html',{'form':form})
 

@@ -26,11 +26,13 @@ urlpatterns = [
     path('' ,admin_login , name = 'adminLogin'),
     path('adminLogout', admin_logout , name='adminLogout'),
     path('addemployee',add_Employee,name='addEmployee'),
-    path('delete/<int:id>', delete, name='delete'),
-    path('<int:id>',update,name='update'),
+    path('delete/<int:id>', delete_emp, name='delete'),
+    path('updateemp/<int:id>',update_emp,name='update'),
     path('addAdmin',add_admin,name='addAdmin'),
     path('showemp',show_employee,name='showemp'),
-    path('showadm',show_admin,name='showadm')
+    path('showadm',show_admin,name='showadm'),
+    path('updateadm/<int:id>',update_adm,name='updateadm'),
+    path('deleteadm/<int:id>',delete_adm,name='deleteadm')
 
 
 
