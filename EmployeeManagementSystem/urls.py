@@ -32,7 +32,9 @@ urlpatterns = [
     path('showemp',show_employee,name='showemp'),
     path('showadm',show_admin,name='showadm'),
     path('updateadm/<int:id>',update_adm,name='updateadm'),
-    path('deleteadm/<int:id>',delete_adm,name='deleteadm')
+    path('deleteadm/<int:id>',delete_adm,name='deleteadm'),
+    path('emp_csv',show_emp_csv,name='emp_csv'),
+    path('adm_csv',show_adm_csv,name='adm_csv'),
 
 
 

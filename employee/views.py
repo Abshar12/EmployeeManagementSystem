@@ -1,12 +1,13 @@
+from urllib import response
 from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
-from django.shortcuts import render ,HttpResponseRedirect,redirect
+from django.shortcuts import render ,HttpResponseRedirect,redirect,HttpResponse
 from .forms import AdminAdd, EmployeeAdd
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
-
+import csv
 
 
 # Create your views here.
@@ -132,3 +133,32 @@ def update_adm(request,id):
         form = AdminAdd(instance=pi)
     return render (request ,'edit_admin.html',{'form':form})
 
+
+def show_emp_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename = Employees.csv'
+
+    writer = csv.writer(response)
+    show=Employee.objects.all()
+
+    writer.writerow(['FirstName','LastName','Gender','Email','Address','Country','State','City','Pincode'])
+
+    for emp in show:
+        writer.writerow([emp.first_name,emp.last_name,emp.gender,emp.email,emp.address,emp.country,emp.state,emp.city,emp.pincode])
+    
+    return response
+
+
+def show_adm_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename = Admin.csv'
+
+    writer = csv.writer(response)
+    show=Admin.objects.all()
+
+    writer.writerow(['FirstName','LastName','Email','Role'])
+
+    for adm in show:
+        writer.writerow([adm.first_name,adm.last_name,adm.email,adm.role])
+    
+    return response
