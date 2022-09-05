@@ -162,3 +162,15 @@ def show_adm_csv(request):
         writer.writerow([adm.first_name,adm.last_name,adm.email,adm.role])
     
     return response
+
+
+def load_states(request):
+    country_id=request.GET.get('country_id')
+    states = State.objects.filter(country_id=country_id)
+    return render(request,'states.html',{'states':states})
+
+
+def load_cities(request):
+    state_id=request.GET.get('state_id')
+    cities = City.objects.filter(state_id=state_id)
+    return render(request,'cities.html',{'cities':cities})

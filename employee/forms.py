@@ -6,15 +6,16 @@ class EmployeeAdd(forms.ModelForm):
     class Meta:
         model = Employee
         fields ='__all__'
-       
-    # def __init__(self,*args,**kwargs):
-    #     super().__init__(*args,**kwargs)
-    #     self.fields['state'].queryset = State.objects.none()
+    
+    def __init__(self,**args,):
+        super().__init__(**args)
+        self.fields['state'].queryset=State.objects.none()
 
-# class AdminAdd(forms.ModelForm):
-#     class Meta:
-#         model = Admin
-#         fields = ('first_name','last_name','email','password','role','is_admin')
+    def __init__(self,**args,):
+        super().__init__(**args)
+        self.fields['city'].queryset=City.objects.none()
+
+       
 
 
 class AdminAdd(forms.ModelForm):
