@@ -128,6 +128,7 @@ def update_adm(request,id):
         form = AdminAdd(request.POST,instance=pi)
         form.is_valid()
         form.save()
+        messages.success(request,"Admin updtaed successfully")
     else:
         pi = Admin.objects.get(pk=id)
         form = AdminAdd(instance=pi)
