@@ -72,8 +72,9 @@ def add_Employee(request):
         city = request.POST['city']
         pincode = request.POST['pincode']
 
-        employees = Employee(first_name=first_name,last_name=last_name,email=email,address=address,country=country,State=state,City=city,pincode=pincode)
+        employees = Employee(first_name=first_name,last_name=last_name,email=email,address=address,country_id=country,state_id=state,city_id=city,pincode=pincode)
         employees.save()
+        messages.success(request,"Employee added successfully")
         
 
     return render(request,'add_employee2.html',d)
