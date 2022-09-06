@@ -1,0 +1,67 @@
+{% include 'header.html' %}
+{% block body%}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<div class="containder" style="margin-top:50px">
+<h2 class="text-center" style="border-bottom:2px solid black ">Add an Employee</h2>
+<br><br>
+<form action="" method="POST" id="EmployeeAdd" data-states-url="{% url 'ajax_load_states'%}" data-cities-url="{% url 'ajax_load_cities'%}">
+    {% csrf_token %}
+    <label class="m-3"><h3>Country</h3></label>
+
+    <select name="country" id="country" class="form-control">
+    <option value="">---Country---</option>
+    {% for i in country %}
+    <option value="{{i.id}}">{{i.name}}</option>
+    {% endfor %}
+    </select>
+    
+    <br>
+    <label ><h2>State</h2></label>
+    <select name="state" id="state" class="form-control">
+
+    </select>
+    <br>
+    <label ><h2>City</h2></label>
+    <select name="city" id="city" class="form-control">
+
+    </select>
+
+</form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>  
+                <script>
+                    $("#country").change(function(){
+                        
+                        const url = $("#EmployeeAdd").attr("data-states-url");
+                        const countryId = $(this).val();
+
+                        $.ajax({
+                            url:url,
+                            data:{
+                                'country_id':countryId
+                            },
+                            success: function(data){
+                                $("#state").html(data);
+                            }
+                        })
+                    })
+                </script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>  
+<script>
+    $("#state").change(function(){
+        
+        const url = $("#EmployeeAdd").attr("data-cities-url");
+        const stateId = $(this).val();
+
+        $.ajax({
+            url:url,
+            data:{
+                'state_id':stateId
+            },
+            success: function(data){
+                $("#city").html(data);
+            }
+        })
+    })
+</script>
+{% endblock %}

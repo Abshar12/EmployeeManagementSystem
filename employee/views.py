@@ -44,7 +44,7 @@ def admin_logout(request):
 
 
 @login_required(login_url='adminLogin')
-def add_Employee(request):
+def addEmployee(request):
     form = EmployeeAdd()
     if request.method=='POST':
         form = EmployeeAdd(request.POST)
@@ -56,6 +56,41 @@ def add_Employee(request):
         else:
             form=EmployeeAdd()
     return render(request,'add_employee.html',{'form':form})
+
+
+def add_Employee(request):
+    country = Country.objects.all()
+    d={'country':country}
+    
+    if request.method=='POST':
+        first_name = request.POST['firstname']
+        last_name = request.POST['lastname']
+        email = request.POST['email']
+        address = request.POST['address']
+        country = request.POST['country']
+        state = request.POST['state']
+        city = request.POST['city']
+        pincode = request.POST['pincode']
+
+        employees = Employee(first_name=first_name,last_name=last_name,email=email,address=address,country=country,State=state,City=city,pincode=pincode)
+        employees.save()
+        
+
+    return render(request,'add_employee2.html',d)
+
+
+# def add_Employee(request):
+    
+#     if request.method=='POST':
+        
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request,"Employee added successfully")
+            
+        
+#         else:
+#             pass
+#     return render(request,'add_employee.html')
 
 
 def show_employee(request):   
@@ -163,7 +198,11 @@ def show_adm_csv(request):
         writer.writerow([adm.first_name,adm.last_name,adm.email,adm.role])
     
     return response
-
+ 
+def country(request):
+    country = Country.objects,all()
+    d={'country':country}
+    return render(request,'add_employee2.html',d)
 
 def load_states(request):
     country_id=request.GET.get('country_id')
