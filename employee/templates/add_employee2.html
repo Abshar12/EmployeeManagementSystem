@@ -16,7 +16,7 @@
 {% block body%}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <div class="containder" style="margin-top:50px">
-<h2 class="text-center" style="border-bottom:2px solid black ">Add an Employee</h2>
+<h2 class="text-center" style="border-bottom:2px solid black ;margin-left: 200px;margin-right: 200px;">Add an Employee</h2>
 <br><br>
 <form action="" method="POST" id="EmployeeAdd" data-states-url="{% url 'ajax_load_states'%}" data-cities-url="{% url 'ajax_load_cities'%}">
     {% csrf_token %}
@@ -33,17 +33,18 @@
     <div style="color:black" class="container col-md-6 mt-3">
         <label>Gender:</label>
         <select name="gender" id="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="" id="1">Male</option>
+            <option value="" id="2">Female</option>
 
-            <option value="other">Other</option>
+            <option value="other" id="3">Other</option>
         </select>
-            <!-- <input type="radio"  name="gender" value="male" class="m-3">
-            <label for="male">Male</label>
-            <input type="radio" name="gender" value="female" class="m-3">
-            <label for="female">Female</label>
-            <input type="radio"  name="gender" value="other" class="m-3">
-            <label for="ot">Other</label> -->
+        <!-- <select name="gender" id="gender" class="form-control">
+            <option value="">---Gender---</option>
+            {% for i in gender %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+            </select> -->
+            
     </div>
 
     <div style="color:black" class="container col-md-6">
@@ -55,6 +56,8 @@
         <label>Address</label>
         <input type="text" class="form-control" name="address" id="address">
     </div>
+
+    
 
     <div style="color:black" class="container col-md-6">
     <label >Country</label>
@@ -88,6 +91,11 @@
         <input type="number" class="form-control" name="pincode" id="pincode">
     </div>
 
+
+    <div style="color:black" class="container col-md-6">
+        <label>Created At</label>
+        <input type="date" class="form-control" name="createdat" id="createdat">
+    </div>
     
     <div style="color:black" class="container text-center">
         <input type="submit" class="btn btn-primary m-5" value="Save">

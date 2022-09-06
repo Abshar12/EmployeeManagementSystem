@@ -61,6 +61,8 @@ def addEmployee(request):
 def add_Employee(request):
     country = Country.objects.all()
     d={'country':country}
+    gender = Gender.objects.all()
+    g ={'gender':gender}
     
     if request.method=='POST':
         first_name = request.POST['firstname']
@@ -71,8 +73,8 @@ def add_Employee(request):
         state = request.POST['state']
         city = request.POST['city']
         pincode = request.POST['pincode']
-
-        employees = Employee(first_name=first_name,last_name=last_name,email=email,address=address,country_id=country,state_id=state,city_id=city,pincode=pincode)
+        gender = request.POST['gender']
+        employees = Employee(first_name=first_name,last_name=last_name,gender_id=gender,email=email,address=address,country_id=country,state_id=state,city_id=city,pincode=pincode)
         employees.save()
         messages.success(request,"Employee added successfully")
         
