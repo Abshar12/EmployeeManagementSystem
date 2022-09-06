@@ -36,7 +36,8 @@ urlpatterns = [
     path('emp_csv',show_emp_csv,name='emp_csv'),
     path('adm_csv',show_adm_csv,name='adm_csv'),
     path('ajax/load-states',load_states,name='ajax_load_states'),
-    path('ajax/load-cities',load_cities,name='ajax_load_cities')
+    path('ajax/load-cities',load_cities,name='ajax_load_cities'),
+    path('forget-password/' , ForgetPassword , name="forget_password"),
 
 
 

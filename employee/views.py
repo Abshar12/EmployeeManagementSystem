@@ -43,7 +43,7 @@ def admin_logout(request):
     logout(request)
 
 
-@login_required(login_url="/")
+@login_required(login_url='adminLogin')
 def add_Employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
@@ -174,3 +174,32 @@ def load_cities(request):
     state_id=request.GET.get('state_id')
     cities = City.objects.filter(state_id=state_id)
     return render(request,'cities.html',{'cities':cities})
+
+
+
+
+import uuid
+from django.core.mail import send_mail
+def ForgetPassword(request):
+    try:
+        if request.method == 'POST':
+            first_name = request.POST.get('first_name')
+            
+            if not Admin.objects.filter(first_name=first_name).first():
+                messages.success(request, 'Not user found with this username.')
+                return redirect('/forget-password/')
+            
+            user_obj = Admin.objects.get(first_name=first_name)
+            token = str(uuid.uuid4())
+            profile_obj= Profile.objects.get(user = user_obj)
+            profile_obj.forget_password_token = token
+            profile_obj.save()
+            send_mail(user_obj.email , token)
+            messages.success(request, 'An email is sent.')
+            return redirect('/forget-password/')
+                
+    
+    
+    except Exception as e:
+        print(e)
+    return render(request , 'forget-password.html')

@@ -1,5 +1,7 @@
 {% include 'header.html' %}
 
+
+
 <body>
     <div class="form-float">
         <div class="container">
@@ -47,180 +49,24 @@
                 </script>              
 
   
-<script>
-    $("#id_state").change(function(){
-        const url = $("#EmployeeAdd").attr("data-cities-url");
-        const stateId = $(this).val();
+                <script>
+                    $("#id_state").change(function(){
+                        const url = $("#EmployeeAdd").attr("data-cities-url");
+                        const stateId = $(this).val();
 
-        $.ajax({
-            url:url,
-            data:{
-                'state_id':stateId
-            },
-            success: function(data){
-                $("#id_city").html(data);
-            }
-        })
-    })
-</script>
+                        $.ajax({
+                            url:url,
+                            data:{
+                                'state_id':stateId
+                            },
+                            success: function(data){
+                                
+                                $("#id_city").html(data);
+                            }
+                        })
+                    })
+                </script>
 
             </div>
         </div>
-    </body>
-
-        <!-- <div class="col-md-7 m-3" >
-            <h5 style="border-bottom:2px solid black ">Show Employee Details</h5>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">State</th>
-                        <th scope="col">City</th>
-                        <th scope="col">is_deleted</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for st in Emp %}
-                        <tr>
-                            <td>{{st.id}}</td>
-                            <td>{{st.first_name}}</td>
-                            <td>{{st.last_name}}</td>
-                            <td>{{st.gender}}</td>
-                            <td>{{st.email}}</td>
-                            <td>{{st.password}}</td>
-                            <td>{{st.address}}</td>
-                            <td>{{st.country}}</td>
-                            <td>{{st.state}}</td>
-                            <td>{{st.city}}</td>
-                            <td>{{st.is_deleted}}</td>
-                            <td>
-                                <a href="{% url 'update' st.id %}" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{% url 'delete' st.id %}" method="POST" class="d-inline">{%csrf_token%}
-                                    <input type="Submit" class="btn btn-danger del" value="Delete">
-                                </form>
-                            </td>
-                            <td>
-                                <td><a href="addemployee/delete/{{ st.id }}">delete</a></td>
-                            </td> -->
-                        <!-- </tr>
-                    {% endfor %}
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                            {% if Emp.has_previous%}
-                          <li class="page-item">
-                            <a class="page-link" href="?page=1" tabindex="-1">First</a>
-                          </li>
-                          <li class="page-item">
-                            <a class="page-link" href="?page={{Emp.previous_page_number}}" tabindex="-1">Previous</a>
-                          </li>
-                          {%  endif %}
-                          
-                          {% if Emp.has_next%}
-                          <li class="page-item">
-                            <a class="page-link" href="?page={{Emp.next_page_number}}">Next</a>
-                          </li>
-                          {% endif %}
-                        </ul>
-                      </nav> -->
-                    <!-- {% if Emp.has_previous %}
-                    
-                    <a href="?page={{Emp.previous_page_number}}">Previous</a>
-                    {% endif %}
-
-                    Page {{Emp.number}} of {{Emp.Paginator.num_pages}}
-
-                    {% if Emp.has_next %}
-                    <a href="?page={{Emp.next_page_number}}">Next</a>
-
-                    {% endif %} -->
-                <!-- </tbody>
-            </table>
-        </div>
-    </div>
-<script>
-    $(document).ready(function(){
-        $(".del").click(function(){
-          if (!confirm("Are you sure you want to delete..?")){
-            return false;
-          }
-        });
-      });
-</script> -->
-
-<!-- <div class="card shadow m-5">
-    <div class="card-body">
-        <h5 style="border-bottom:2px solid black ">Add an employee</h5>
-
-        <div class="container-fluid">
-            <form action="" method="POST">
-                {%csrf_token%}
-                <div class="form-row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="">First Name</label>
-                            <input type="text" name="firstname" class="form-control" placeholder="Enter your first name"
-                                required>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="">Last Name</label>
-                            <input type="text" name="lastname" class="form-control" placeholder="Enter your last name"
-                                required>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="">Gender</label>
-                            <select name="gender" id="">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter your email"
-                                required>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter your password"
-                                required>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="">Address</label>
-                            <input type="text" name="address" class="form-control" placeholder="Enter your address"
-                                required>
-                        </div>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
-
-</div> -->
+</body>
