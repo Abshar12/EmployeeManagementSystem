@@ -117,13 +117,7 @@ class Admin(AbstractBaseUser,PermissionsMixin):
 
 
 
-class Profile(models.Model):
-    first_name = models.OneToOneField(Admin , on_delete=models.CASCADE)
-    forget_password_token = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.user.username
 
 
 

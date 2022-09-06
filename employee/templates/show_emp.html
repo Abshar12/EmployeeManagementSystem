@@ -28,7 +28,7 @@
                     <th scope="col">Country</th>
                     <th scope="col">State</th>
                     <th scope="col">City</th>
-                    <th scope="col">is_deleted</th>
+                    {% comment %} <th scope="col">is_deleted</th> {% endcomment %}
                     <th scope="col">Action</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -46,7 +46,7 @@
                         <td>{{st.country}}</td>
                         <td>{{st.state}}</td>
                         <td>{{st.city}}</td>
-                        <td>{{st.is_deleted}}</td>
+                        {% comment %} <td>{{st.is_deleted}}</td> {% endcomment %}
                         <td>
                             <a href="{% url 'update' st.id %}" class="btn btn-warning btn-sm">Edit</a>
                         </td>
