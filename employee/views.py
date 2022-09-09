@@ -74,12 +74,13 @@ def add_Employee(request):
         city = request.POST['city']
         pincode = request.POST['pincode']
         gender = request.POST['gender']
-        employees = Employee(first_name=first_name,last_name=last_name,gender_id=gender,email=email,address=address,country_id=country,state_id=state,city_id=city,pincode=pincode)
+        created_at = request.POST['createdat']
+        employees = Employee(first_name=first_name,last_name=last_name,gender=gender,email=email,address=address,country_id=country,state_id=state,city_id=city,pincode=pincode,created_at=created_at)
         employees.save()
         messages.success(request,"Employee added successfully")
         
 
-    return render(request,'add_employee2.html',d)
+    return render(request,'add_employee.html',d)
 
 
 # def add_Employee(request):
@@ -147,17 +148,40 @@ def delete_adm(request,id):
     
 
 
+# def update_emp(request,id):
+#     country = Country.objects.all()
+    
+#     if request.method =='POST':
+#         pi = Employee.objects.get(pk=id)
+#         form = EmployeeAdd(request.POST , instance=pi)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request,"Employee updated successfully")
+#     else:
+#         pi = Employee.objects.get(pk=id)
+#         form = EmployeeAdd(instance=pi) 
+#         messages.success(request,"cannot update now")
+#     return render(request,'edit_employees1.html',{'country':country,'form':form,'edit':pi})
+
+
+
+
 def update_emp(request,id):
-    if request.method =='POST':
-        pi = Employee.objects.get(pk=id)
-        form = EmployeeAdd(request.POST , instance=pi)
-        form.is_valid()
+    country = Country.objects.all()
+    
+    emp = Employee.objects.get(id=id)
+   
+    return render(request,'edit_employees1.html',{'edit':emp,'country':country})
+
+def updated_emp(request,id):
+    emp = Employee.objects.get(id=id)
+    form = EmployeeAdd(request.POST,instance=emp)
+    if form.is_valid():
         form.save()
         messages.success(request,"Employee updated successfully")
-    else:
-        pi = Employee.objects.get(pk=id)
-        form = EmployeeAdd(instance=pi) 
-    return render(request,'edit_employees.html',{'form':form})
+    return render (request,'edit_employees1.html',{'edit':emp})
+
+    
 
 
 def update_adm(request,id):

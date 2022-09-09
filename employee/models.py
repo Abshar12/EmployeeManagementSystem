@@ -37,7 +37,7 @@ class Gender(models.Model):
 class Employee(models.Model):
     first_name = models.CharField (max_length=50)
     last_name = models.CharField (max_length=50)
-    gender = models.ForeignKey(Gender, on_delete=models.CASCADE , null=True)
+    gender = models.CharField(max_length=50, null=True)
     email = models.CharField (max_length=50, unique=True)
     password = models.CharField (max_length=800)
     address = models.CharField (max_length=50)
@@ -45,8 +45,8 @@ class Employee(models.Model):
     state = models.ForeignKey(State ,on_delete=models.SET_NULL , null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL , null=True)
     pincode = models.IntegerField()
-    created_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
-    updated_at=models.DateTimeField(auto_now=True,blank=True,null=True)
+    created_at=models.DateField(blank=True,null=True)
+    updated_at=models.DateField(blank=True,null=True)
     is_deleted = models.BooleanField(default=0)
 
     def __str__(self):
