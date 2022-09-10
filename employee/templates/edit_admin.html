@@ -1,26 +1,29 @@
 {% include 'header.html' %}
+<head>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
 
-{% block content %}
-{% if messages %}
-<div class="container">
-    {% if messages %}
-        
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} m-2 " role="alert">{{ message }}</div>
-            {% endfor %}
-        
-    {% endif %}
-</div>
-                {% endif %}
-<div class="row m-3" >
-    <div-col-sm-8 offset-2 class="m-3">
-        <h5 style="border-bottom:2px solid black "> Update Admin Information </h5>
-        <form action="" method="POST">
-            {%csrf_token%}
-            {{form.as_p}}
-            <input type="submit" class="btn btn-success" value="Update">
-            <a href="{% url 'showadm' %}" class="btn btn-info">Back to Admin</a>
-        </form>
+<body style="background-color: lightblue;">
+        <div class="container">
+            {% if messages %}
+                
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} m-2 " role="alert">{{ message }}</div>
+                    {% endfor %}
+                
+            {% endif %}
+        </div>
+        <a href="{% url 'showadm' %}" class="btn btn-info m-2 " style="float: right;padding: auto;">Back to Admin</a>
+    <div class="row m-3" >
+        <div-col-sm-8 offset-2 class="m-3">
+            <h2 class="text-center" style="border-bottom:2px solid black ;margin-left: 200px;margin-right: 200px;">Update Admin Information</h2>
+            <form action="" method="POST">
+                {%csrf_token%}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-success" value="Update">
+                
+            </form>
+        </div>
     </div>
-</div>
-{% endblock content %}
+</body>

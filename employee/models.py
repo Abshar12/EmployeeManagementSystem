@@ -37,9 +37,9 @@ class Gender(models.Model):
 class Employee(models.Model):
     first_name = models.CharField (max_length=50)
     last_name = models.CharField (max_length=50)
-    gender = models.CharField(max_length=50, null=True)
+    gender = models.ForeignKey(Gender,on_delete=models.SET_NULL, null=True)
     email = models.CharField (max_length=50, unique=True)
-    password = models.CharField (max_length=800)
+    # password = models.CharField (max_length=800)
     address = models.CharField (max_length=50)
     country = models.ForeignKey(Country ,on_delete=models.SET_NULL , null=True)
     state = models.ForeignKey(State ,on_delete=models.SET_NULL , null=True)
@@ -89,12 +89,12 @@ class Admin(AbstractBaseUser,PermissionsMixin):
     last_name = models.CharField( max_length=50)
     email = models.EmailField(verbose_name='email address',max_length=255,unique=True,)
     # date_of_birth = models.DateField()
-    created_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    created_at=models.DateField(auto_now_add=True,blank=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,blank=True,null=True)
     role = models.ForeignKey(Role,on_delete=models.DO_NOTHING,default=None,null=True)
     is_deleted =  models.BooleanField(default=0)
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=True)
 
     objects = MyUserManager()
 

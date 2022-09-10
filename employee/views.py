@@ -44,8 +44,11 @@ def admin_logout(request):
     logout(request)
 
 
+
+
+
 @login_required(login_url='adminLogin')
-def addEmployee(request):
+def add_employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
         form = EmployeeAdd(request.POST)
@@ -59,43 +62,37 @@ def addEmployee(request):
     return render(request,'add_employee.html',{'form':form})
 
 
-def add_Employee(request):
+
+
+
+def update_emp(request,id):
     country = Country.objects.all()
-    d={'country':country}
-    gender = Gender.objects.all()
-    g ={'gender':gender}
     
-    if request.method=='POST':
-        first_name = request.POST['firstname']
-        last_name = request.POST['lastname']
-        email = request.POST['email']
-        address = request.POST['address']
-        country = request.POST['country']
-        state = request.POST['state']
-        city = request.POST['city']
-        pincode = request.POST['pincode']
-        gender = request.POST['gender']
-        created_at = request.POST['createdat']
-        employees = Employee(first_name=first_name,last_name=last_name,gender=gender,email=email,address=address,country_id=country,state_id=state,city_id=city,pincode=pincode,created_at=created_at)
-        employees.save()
-        messages.success(request,"Employee added successfully")
+    if request.method =='POST':
+        pi = Employee.objects.get(pk=id)
+        form = EmployeeAdd(request.POST , instance=pi)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Employee updated successfully")
+    else:
+        pi = Employee.objects.get(pk=id)
+        form = EmployeeAdd(instance=pi) 
         
-
-    return render(request,'add_employee.html',d)
+    return render(request,'edit_employees.html',{'country':country,'form':form,'edit':pi})
 
 
-# def add_Employee(request):
-    
-#     if request.method=='POST':
-        
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request,"Employee added successfully")
-            
-        
-#         else:
-#             pass
-#     return render(request,'add_employee.html')
+
+
+
+def delete_emp(request,id):
+    if request.method == 'POST':
+        pi = Employee.objects.get(pk=id)
+        pi.delete()
+        messages.success(request,"Employee deleted successfully")
+        return redirect('showemp') 
+
+
+
 
 
 def show_employee(request):   
@@ -107,32 +104,48 @@ def show_employee(request):
 
 
 
-# def add_admin(request):
-#     form = AdminAdd()
-#     if request.method=='POST':
-#         form = AdminAdd(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request,"Admin added successfully")
-#             form=AdminAdd()
-        
-#         else:
-#             form=AdminAdd()
-#     return render(request,'add_admin.html',{'form':form})
+
 
 def add_admin(request):
-    role = Role.objects.all()
+    form = AdminAdd()
     if request.method=='POST':
-        first_name = request.POST['firstname']
-        last_name = request.POST['lastname']
-        email = request.POST['email']
-        password = request.POST['password']
-        role = request.POST['password']
-        created_at = request.POST['createdat']
-        admin = Admin(first_name=first_name,last_name=last_name,email=email,password=password,role_id=role,created_at=created_at)
-        admin.save()
-        messages.success(request,"Admin added successfully")
-    return render(request,'add_admintest.html',{'role':role})
+        form = AdminAdd(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Admin added successfully")
+            form=AdminAdd()
+        
+        else:
+            form=AdminAdd()
+    return render(request,'add_admin.html',{'form':form})
+
+
+
+
+
+
+def update_adm(request,id):
+    if request.method == 'POST':
+        pi = Admin.objects.get(pk=id)
+        form = AdminAdd(request.POST,instance=pi)
+        form.is_valid()
+        form.save()
+        messages.success(request,"Admin updtaed successfully")
+    else:
+        pi = Admin.objects.get(pk=id)
+        form = AdminAdd(instance=pi)
+    return render (request ,'edit_admin.html',{'form':form})
+
+
+
+
+def delete_adm(request,id):
+    if request.method == 'POST':
+        pi = Admin.objects.get(pk=id)
+        pi.delete()
+        messages.success(request,"Admin deleted successfully")
+        return redirect('showadm')
+
 
 
 
@@ -147,71 +160,6 @@ def show_admin(request):
 
 
 
-def delete_emp(request,id):
-    if request.method == 'POST':
-        pi = Employee.objects.get(pk=id)
-        pi.delete()
-        messages.success(request,"Employee deleted successfully")
-        return redirect('showemp') 
-
-
-def delete_adm(request,id):
-    if request.method == 'POST':
-        pi = Admin.objects.get(pk=id)
-        pi.delete()
-        messages.success(request,"Admin deleted successfully")
-        return redirect('showadm')
-
-    
-
-
-# def update_emp(request,id):
-#     country = Country.objects.all()
-    
-#     if request.method =='POST':
-#         pi = Employee.objects.get(pk=id)
-#         form = EmployeeAdd(request.POST , instance=pi)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request,"Employee updated successfully")
-#     else:
-#         pi = Employee.objects.get(pk=id)
-#         form = EmployeeAdd(instance=pi) 
-#         messages.success(request,"cannot update now")
-#     return render(request,'edit_employees1.html',{'country':country,'form':form,'edit':pi})
-
-
-
-
-def update_emp(request,id):
-    country = Country.objects.all()
-    
-    emp = Employee.objects.get(id=id)
-   
-    return render(request,'edit_employees1.html',{'edit':emp,'country':country})
-
-def updated_emp(request,id):
-    emp = Employee.objects.get(id=id)
-    form = EmployeeAdd(request.POST,instance=emp)
-    if form.is_valid():
-        form.save()
-        messages.success(request,"Employee updated successfully")
-    return render (request,'edit_employees1.html',{'edit':emp})
-
-    
-
-
-def update_adm(request,id):
-    if request.method == 'POST':
-        pi = Admin.objects.get(pk=id)
-        form = AdminAdd(request.POST,instance=pi)
-        form.is_valid()
-        form.save()
-        messages.success(request,"Admin updtaed successfully")
-    else:
-        pi = Admin.objects.get(pk=id)
-        form = AdminAdd(instance=pi)
-    return render (request ,'edit_admin.html',{'form':form})
 
 
 def show_emp_csv(request):
@@ -229,6 +177,8 @@ def show_emp_csv(request):
     return response
 
 
+
+
 def show_adm_csv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename = Admin.csv'
@@ -243,20 +193,20 @@ def show_adm_csv(request):
     
     return response
  
-# def country(request):
-#     country = Country.objects,all()
-#     d={'country':country}
-#     return render(request,'add_employee2.html',d)
+def country(request):
+    country = Country.objects,all()
+    d={'country':country}
+    return render(request,'add_employee.html',d)
 
 def load_states(request):
     country_id=request.GET.get('country_id')
-    states = State.objects.filter(country_id=country_id)
+    states = State.objects.filter(country_id=country_id).order_by('name')
     return render(request,'states.html',{'states':states})
 
 
 def load_cities(request):
     state_id=request.GET.get('state_id')
-    cities = City.objects.filter(state_id=state_id)
+    cities = City.objects.filter(state_id=state_id).order_by('name')
     return render(request,'cities.html',{'cities':cities})
 
 

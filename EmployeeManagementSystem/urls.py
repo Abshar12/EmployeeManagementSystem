@@ -25,10 +25,10 @@ urlpatterns = [
     # path('', index , name='index'),
     path('' ,admin_login , name = 'adminLogin'),
     path('adminLogout', admin_logout , name='adminLogout'),
-    path('addemployee',add_Employee,name='addEmployee'),
+    path('addemployee',add_employee,name='addEmployee'),
     path('delete/<int:id>', delete_emp, name='delete'),
     path('updateemp/<int:id>',update_emp,name='update'),
-    path('updatedemp/<int:id>',updated_emp,name='updated'),
+    
 
     path('addAdmin',add_admin,name='addAdmin'),
     path('showemp',show_employee,name='showemp'),
