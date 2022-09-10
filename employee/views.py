@@ -1,3 +1,4 @@
+from logging import lastResort
 from urllib import response
 from django.shortcuts import render
 from .models import *
@@ -106,18 +107,34 @@ def show_employee(request):
 
 
 
-def add_admin(request):
-    form = AdminAdd()
-    if request.method=='POST':
-        form = AdminAdd(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request,"Admin added successfully")
-            form=AdminAdd()
+# def add_admin(request):
+#     form = AdminAdd()
+#     if request.method=='POST':
+#         form = AdminAdd(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request,"Admin added successfully")
+#             form=AdminAdd()
         
-        else:
-            form=AdminAdd()
-    return render(request,'add_admin.html',{'form':form})
+#         else:
+#             form=AdminAdd()
+#     return render(request,'add_admin.html',{'form':form})
+
+def add_admin(request):
+    role = Role.objects.all()
+    if request.method=='POST':
+        first_name = request.POST['firstname']
+        last_name = request.POST['lastname']
+        email = request.POST['email']
+        password = request.POST['password']
+        role = request.POST['password']
+        created_at = request.POST['createdat']
+        admin = Admin(first_name=first_name,last_name=last_name,email=email,password=password,role_id=role,created_at=created_at)
+        admin.save()
+        messages.success(request,"Admin added successfully")
+    return render(request,'add_admintest.html',{'role':role})
+
+
 
 def show_admin(request):
     show=Admin.objects.all()
@@ -226,10 +243,10 @@ def show_adm_csv(request):
     
     return response
  
-def country(request):
-    country = Country.objects,all()
-    d={'country':country}
-    return render(request,'add_employee2.html',d)
+# def country(request):
+#     country = Country.objects,all()
+#     d={'country':country}
+#     return render(request,'add_employee2.html',d)
 
 def load_states(request):
     country_id=request.GET.get('country_id')

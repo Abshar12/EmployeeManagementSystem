@@ -1,0 +1,86 @@
+{% include 'header.html' %}
+<head>
+    
+
+</head>
+<body style="color:green;background-color: lightblue;">
+    <div class="form-float">
+        <div class="container">
+            {% if messages %}
+                
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} m-2 " role="alert">{{ message }}</div>
+                    {% endfor %}
+                
+            {% endif %}
+        </div>
+        <a href="{% url 'showemp' %}" ><button class="btn btn-dark mb-3" style ="float: right;">Show Employee</button></a>
+    
+
+{% block body%}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<div class="containder" style="margin-top:50px">
+<h2 class="text-center" style="border-bottom:2px solid black ;margin-left: 200px;margin-right: 200px;">Add an Admin</h2>
+<br><br>
+<form action="" method="POST" id="EmployeeAdd" name="Employe" data-states-url="{% url 'ajax_load_states'%}" data-cities-url="{% url 'ajax_load_cities'%}">
+    {% csrf_token %}
+    <div style="color:black" class="container col-md-6">
+        <label>First Name</label>
+        <input type="text" class="form-control" name="firstname" id="firstname" >
+    </div>
+
+    <div style="color:black" class="container col-md-6">
+        <label>Last Name</label>
+        <input type="text" class="form-control" name="lastname" id="lastname" >
+    </div>
+
+    
+
+    <div style="color:black" class="container col-md-6">
+        <label>Email</label>
+        <input type="text" class="form-control" name="email" id="email" >
+    </div>
+
+    <div style="color:black" class="container col-md-6">
+        <label>Password</label>
+        <input type="password" class="form-control" name="password" id="password" >
+    </div>
+
+    <div style="color:black" class="container col-md-6">
+        <label>Confrim Password</label>
+        <input type="password" class="form-control" name="password1" id="password1" >
+    </div>
+
+    
+
+    
+
+    <div style="color:black" class="container col-md-6">
+    <label >Role</label>
+    <select name="country" id="country" class="form-control" >
+    <option value="">---Role---</option>
+    {% for i in role %}
+    <option value="{{i.id}}">{{i.name}}</option>
+    {% endfor %}
+    </select>
+    </div>
+
+
+
+   
+
+
+    <div style="color:black" class="container col-md-6">
+        <label>Created At</label>
+        <input type="date" class="form-control" name="createdat" id="createdat" >
+    </div>
+    
+    <div style="color:black" class="container text-center">
+        <input type="submit" class="btn btn-primary m-5" value="Save">
+    </div>
+     
+
+</form>
+</div>
+{% endblock %}
