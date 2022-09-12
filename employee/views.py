@@ -1,3 +1,4 @@
+from email import message
 from logging import lastResort
 from urllib import response
 from django.shortcuts import render
@@ -33,6 +34,7 @@ def admin_login(request):
 
         
     else:
+        
         return render(request,'admin_login.html')
     
     return render(request,'admin_login.html')
@@ -47,7 +49,7 @@ def admin_logout(request):
 
 
 
-@login_required('')
+@login_required(login_url='/login/')
 def add_employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
