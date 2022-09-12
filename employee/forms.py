@@ -3,6 +3,7 @@ from re import A
 from django import forms
 from .models import *
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib import messages
 
 
 class Date(forms.DateInput):
@@ -11,10 +12,10 @@ class Date(forms.DateInput):
 
 class EmployeeAdd(forms.ModelForm):
     created_at = forms.DateField(label='Created At', widget=Date)
-    updated_at= forms.DateField(label='Updated At',widget=Date)
+    # updated_at= forms.DateField(label='Updated At',widget=Date)
     class Meta:
         model = Employee
-        fields =('first_name','last_name','gender','email','resume','address','country','state','city','pincode','created_at','updated_at')
+        fields =('first_name','last_name','gender','email','resume','address','country','state','city','pincode','created_at')
         widgets={
             'first_name': forms.TextInput(attrs={'class':'form-control col-md-6'}),
             'last_name' : forms.TextInput(attrs={'class':'form-control col-md-6'}),
@@ -26,12 +27,61 @@ class EmployeeAdd(forms.ModelForm):
             'city':forms.Select(attrs={'class':'form-control col-md-6'}),
             'pincode':forms.NumberInput(attrs={'class':'form-control col-md-6'}),
             'created_at':forms.DateField(widget=Date),
+            }
+
+    
+
+
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields['state'].queryset = State.objects.none()
+
+        if 'country' in self.data:
+            try:
+                country_id = int(self.data.get('country'))
+                self.fields['state'].queryset=State.objects.filter(country_id=country_id).order_by('name')
+            except (ValueError,TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['state'].queryset = self.instance.country.state_set.order_by('name')
+   
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields['city'].queryset = City.objects.none()
+
+        if 'state' in self.data:
+            try:
+                state_id = int(self.data.get('state'))
+                self.fields['city'].queryset=City.objects.filter(state_id=state_id).order_by('name')
+            except (ValueError,TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['city'].queryset = self.instance.state.city_set.order_by('name')
+
+
+
+class Employeeupdate(forms.ModelForm):
+    # created_at = forms.DateField(label='Created At', widget=Date)
+    updated_at= forms.DateField(label='Updated At',widget=Date)
+    class Meta:
+        model = Employee
+        fields =('first_name','last_name','gender','email','resume','address','country','state','city','pincode','updated_at')
+        widgets={
+            'first_name': forms.TextInput(attrs={'class':'form-control col-md-6'}),
+            'last_name' : forms.TextInput(attrs={'class':'form-control col-md-6'}),
+            'address' : forms.TextInput(attrs={'class':'form-control col-md-6'}),
+            'email' : forms.EmailInput(attrs={'class':'form-control col-md-6'}),
+            'gender':forms.Select(attrs={'class':'form-control col-md-6'}),
+            'country':forms.Select(attrs={'class':'form-control col-md-6'}),
+            'state':forms.Select(attrs={'class':'form-control col-md-6'}),
+            'city':forms.Select(attrs={'class':'form-control col-md-6'}),
+            'pincode':forms.NumberInput(attrs={'class':'form-control col-md-6'}),
+            
             'updated_at':forms.DateField(widget=Date),
             
-            
-
-            
         }
+
+
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['state'].queryset = State.objects.none()

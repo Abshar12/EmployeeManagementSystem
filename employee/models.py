@@ -38,7 +38,7 @@ class Employee(models.Model):
     first_name = models.CharField (max_length=50)
     last_name = models.CharField (max_length=50)
     gender = models.ForeignKey(Gender,on_delete=models.SET_NULL, null=True)
-    email = models.CharField (max_length=50, unique=True)
+    email = models.CharField (max_length=50)
     resume = models.FileField(null=True)
     address = models.CharField (max_length=50)
     country = models.ForeignKey(Country ,on_delete=models.SET_NULL , null=True)
@@ -117,7 +117,13 @@ class Admin(AbstractBaseUser,PermissionsMixin):
 
 
 
+# class Profile(models.Model):
+#     user = models.OneToOneField(Admin,on_delete=models.CASCADE)
+#     forget_password = models.CharField(max_length=100)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
+#     def __str__(self):
+#         return self.user.email
 
 
 

@@ -1,11 +1,12 @@
 from email import message
+import email
 from logging import lastResort
 from urllib import response
 from django.shortcuts import render
 from .models import *
 from django.contrib.auth import logout , authenticate , login 
 from django.shortcuts import render ,HttpResponseRedirect,redirect,HttpResponse
-from .forms import AdminAdd, EmployeeAdd
+from .forms import AdminAdd, EmployeeAdd, Employeeupdate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -51,16 +52,20 @@ def admin_logout(request):
 
 @login_required(login_url='/login/')
 def add_employee(request):
+    employee = Employee.objects.all()
     form = EmployeeAdd()
     if request.method=='POST':
         form = EmployeeAdd(request.POST,request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request,"Employee added successfully")
-            form=EmployeeAdd()
+        for emp in employee:
+            if emp.email == form.data.get('email'):
+                messages.warning(request, 'email already exists.')
+            elif form.is_valid():
+                form.save()
+                messages.success(request,"Employee added successfully")
+                form=EmployeeAdd()
         
-        else:
-            form=EmployeeAdd()
+            else:
+                form=EmployeeAdd()
     return render(request,'add_employee.html',{'form':form})
 
 
@@ -72,13 +77,13 @@ def update_emp(request,id):
     
     if request.method =='POST':
         pi = Employee.objects.get(pk=id)
-        form = EmployeeAdd(request.POST , instance=pi)
+        form = Employeeupdate(request.POST , instance=pi)
         if form.is_valid():
             form.save()
             messages.success(request,"Employee updated successfully")
     else:
         pi = Employee.objects.get(pk=id)
-        form = EmployeeAdd(instance=pi) 
+        form = Employeeupdate(instance=pi) 
         
     return render(request,'edit_employees.html',{'country':country,'form':form,'edit':pi})
 
