@@ -19,6 +19,9 @@ from django.contrib import admin
 from django.urls import path
 from employee.views import *
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,8 +43,7 @@ urlpatterns = [
     path('ajax/load-states/',load_states,name='ajax_load_states'),
     path('ajax/load-cities/',load_cities,name='ajax_load_cities'),
     
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 
 
-
-]

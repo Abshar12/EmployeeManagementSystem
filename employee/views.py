@@ -53,7 +53,7 @@ def admin_logout(request):
 def add_employee(request):
     form = EmployeeAdd()
     if request.method=='POST':
-        form = EmployeeAdd(request.POST)
+        form = EmployeeAdd(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request,"Employee added successfully")

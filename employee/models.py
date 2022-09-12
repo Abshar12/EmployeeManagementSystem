@@ -39,7 +39,7 @@ class Employee(models.Model):
     last_name = models.CharField (max_length=50)
     gender = models.ForeignKey(Gender,on_delete=models.SET_NULL, null=True)
     email = models.CharField (max_length=50, unique=True)
-    # password = models.CharField (max_length=800)
+    resume = models.FileField(null=True)
     address = models.CharField (max_length=50)
     country = models.ForeignKey(Country ,on_delete=models.SET_NULL , null=True)
     state = models.ForeignKey(State ,on_delete=models.SET_NULL , null=True)

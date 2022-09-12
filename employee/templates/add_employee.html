@@ -21,7 +21,7 @@
         <h2 class="text-center" style="border-bottom:2px solid black ;margin-left: 200px;margin-right: 200px;">Add Employee</h2>
         
         <div class="container"  style="margin-left:250px;margin-top: 50px;">
-            <form action="" method="POST" id="Employee"  data-states-url="{% url 'ajax_load_states'%}" data-cities-url="{% url 'ajax_load_cities'%}">
+            <form action="" method="POST" id="Employee" enctype="multipart/form-data" data-states-url="{% url 'ajax_load_states'%}" data-cities-url="{% url 'ajax_load_cities'%}">
                 {%csrf_token%}
                 {{form.as_p}}
                 <br><br>
