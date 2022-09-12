@@ -47,7 +47,7 @@ def admin_logout(request):
 
 
 
-@login_required(login_url='adminLogin')
+@login_required('')
 def add_employee(request):
     form = EmployeeAdd()
     if request.method=='POST':

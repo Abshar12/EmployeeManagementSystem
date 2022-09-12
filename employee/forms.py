@@ -1,12 +1,20 @@
 from cProfile import label
+from re import A
 from django import forms
 from .models import *
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
+
+class Date(forms.DateInput):
+    input_type = 'date'
+
+
 class EmployeeAdd(forms.ModelForm):
+    created_at = forms.DateField(label='Created At', widget=Date)
+    updated_at= forms.DateField(label='Updated At',widget=Date)
     class Meta:
         model = Employee
-        fields =('first_name','last_name','gender','email','address','country','state','city','pincode','created_at')
+        fields =('first_name','last_name','gender','email','address','country','state','city','pincode','created_at','updated_at')
         widgets={
             'first_name': forms.TextInput(attrs={'class':'form-control col-md-6'}),
             'last_name' : forms.TextInput(attrs={'class':'form-control col-md-6'}),
@@ -17,6 +25,9 @@ class EmployeeAdd(forms.ModelForm):
             'state':forms.Select(attrs={'class':'form-control col-md-6'}),
             'city':forms.Select(attrs={'class':'form-control col-md-6'}),
             'pincode':forms.NumberInput(attrs={'class':'form-control col-md-6'}),
+            'created_at':forms.DateField(widget=Date),
+            'updated_at':forms.DateField(widget=Date)
+            
 
             
         }

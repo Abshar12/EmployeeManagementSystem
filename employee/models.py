@@ -45,8 +45,8 @@ class Employee(models.Model):
     state = models.ForeignKey(State ,on_delete=models.SET_NULL , null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL , null=True)
     pincode = models.IntegerField()
-    created_at=models.DateField(blank=True,null=True)
-    updated_at=models.DateField(blank=True,null=True)
+    created_at=models.DateField(null=True)
+    updated_at=models.DateField(null=True)
     is_deleted = models.BooleanField(default=0)
 
     def __str__(self):
