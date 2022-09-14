@@ -50,7 +50,7 @@ def admin_logout(request):
 
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/login')
 def add_employee(request):
     employee = Employee.objects.all()
     form = EmployeeAdd()
@@ -123,7 +123,7 @@ def add_admin(request):
             form=AdminAdd()
         
         else:
-            form=AdminAdd()
+            form=AdminAdd() 
     return render(request,'add_admin.html',{'form':form})
 
 
@@ -218,29 +218,131 @@ def load_cities(request):
 
 
 
+from .helpers import send_forget_password_mail
+import uuid
 
-# import uuid
-# from django.core.mail import send_mail
-# def ForgetPassword(request):
-#     try:
-#         if request.method == 'POST':
-#             first_name = request.POST.get('first_name')
+
+
+def change_password(request , token):
+    context = {}
+    
+    
+    try:
+        profile_obj = Profile.objects.filter(forget_password_token = token).first()
+        context = {'email' : profile_obj}
+        
+        if request.method == 'POST':
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('reconfirm_password')
+            email = request.POST.get('email')
             
-#             if not Admin.objects.filter(first_name=first_name).first():
-#                 messages.success(request, 'Not user found with this username.')
-#                 return redirect('/forget-password/')
+            if email is  None:
+                messages.success(request, 'No email found.')
+                return redirect(f'/change-password/{token}/')
+                
             
-#             user_obj = Admin.objects.get(first_name=first_name)
-#             token = str(uuid.uuid4())
-#             profile_obj= Profile.objects.get(user = user_obj)
-#             profile_obj.forget_password_token = token
-#             profile_obj.save()
-#             send_mail(user_obj.email , token)
-#             messages.success(request, 'An email is sent.')
-#             return redirect('/forget-password/')
+            if  new_password != confirm_password:
+                messages.success(request, 'both should  be equal.')
+                return redirect(f'/change-password/{token}/')
+                         
+            
+            user_obj = Admin.objects.get(id = email)
+            user_obj.set_password(new_password)
+            user_obj.save()
+            return redirect('/login/')
+            
+            
+            
+        
+        
+    except Exception as e:
+        print(e)
+    return render(request , 'change-password.html' , context)
+
+
+def forget_password(request):
+    try:
+        if request.method == 'POST':
+            email = request.POST.get('email')
+            
+            if not Admin.objects.filter(email=email).first():
+                messages.success(request, 'Not user found with this email.')
+                return redirect('/forget-password/')
+            
+            user_obj = Admin.objects.get(email = email)
+            token = str(uuid.uuid4())
+            # profile_obj= Profile.objects.get(user = user_obj)
+            # profile_obj.forget_password_token = token
+            # profile_obj.save()
+            send_forget_password_mail(user_obj.email , token)
+            messages.success(request, 'We have sent you a password recovery email')
+            return redirect('/forget-password/')
                 
     
     
+    except Exception as e:
+        print(e)
+    return render(request , 'forget-password.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def change_password(request,token):
+#     context={}
+#     try:
+#         profie_obj = Profile.objects.get(forget_password_token=token).first()
+#         print (profie_obj)
+#         context = {'user_id':profie_obj.user.id}
+
+
 #     except Exception as e:
-#         print(e)
-#     return render(request , 'forget-password.html')
+#         print (e)
+
+#     return render(request,'change-password.html',context)
+
+
+# def forget_password(request):
+#     try:
+#         if request.method == 'POST':
+#             email = request.POST.get('email')
+
+#             if not Admin.objects.filter(email=email).first():
+#                 messages.success(request,"No user found with this email")
+#                 return redirect('/forget-password/')
+
+#             user_obj = Admin.objects.get(email=email)
+#             token =str(uuid.uuid4()) 
+#             profile_obj = Profile.objects.get(user=user_obj)
+#             profile_obj.forget_password_token = token
+#             profile_obj.save()
+#             send_forget_password_mail(user_obj,token)
+#             messages.success(request,"An email is sent")
+#             return redirect('/forget-password/')
+
+#     except Exception as e:
+#         print (e)
+#     return render(request,'forget-password.html')

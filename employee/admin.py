@@ -14,6 +14,7 @@ admin.site.register(City)
 admin.site.register(Employee)
 admin.site.register(Role)
 admin.site.register(Gender)
+admin.site.register(Profile)
 
 
 
