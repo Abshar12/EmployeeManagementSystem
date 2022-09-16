@@ -10,6 +10,8 @@ class Date(forms.DateInput):
     input_type = 'date'
 
 
+
+
 class EmployeeAdd(forms.ModelForm):
     created_at = forms.DateField(label='Created At', widget=Date)
     # updated_at= forms.DateField(label='Updated At',widget=Date)
@@ -107,6 +109,7 @@ class Employeeupdate(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['city'].queryset = self.instance.state.city_set.order_by('name')
+   
        
 
 

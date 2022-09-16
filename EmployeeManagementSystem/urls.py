@@ -40,8 +40,13 @@ urlpatterns = [
     path('adm_csv/',show_adm_csv,name='adm_csv'),
     path('ajax/load-states/',load_states,name='ajax_load_states'),
     path('ajax/load-cities/',load_cities,name='ajax_load_cities'),
-    path('change-password/<token>',change_password,name='change_password'),
-    path('forget-password/',forget_password,name='forget-password')
+    # path('change-password/<token>',change_password,name='change_password'),
+    # path('forget-password/',forget_password,name='forget-password'),
+    path('password_reset/',auth_views.PasswordResetView.as_view(),name='password_reset'),
+    path('password_reset/done/',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
+    path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
+    path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
+
     
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

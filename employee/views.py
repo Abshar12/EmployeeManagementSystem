@@ -27,16 +27,18 @@ def admin_login(request):
         password = request.POST['password']
         
         user = authenticate(request,email=email,password=password)
-        print ( user is not None)
+        print (user is not None)
         if user is not None:
             login(request,user)
             
             return render(request,'welcome.html')
-
+        
+        else:
+            messages.warning(request,"Credentials do not match. Please check your email or password")
+           
         
     else:
-        
-        return render(request,'admin_login.html')
+         return render(request,'admin_login.html')
     
     return render(request,'admin_login.html')
 
@@ -44,8 +46,9 @@ def admin_login(request):
 
 
 def admin_logout(request):
+    
     logout(request)
-
+    
 
 
 
@@ -218,71 +221,75 @@ def load_cities(request):
 
 
 
-from .helpers import send_forget_password_mail
-import uuid
 
 
 
-def change_password(request , token):
-    context = {}
+
+# from .helpers import send_forget_password_mail
+# import uuid
+
+
+
+# def change_password(request , token):
+#     context = {}
     
     
-    try:
-        profile_obj = Profile.objects.filter(forget_password_token = token).first()
-        context = {'email' : profile_obj}
+#     try:
+#         profile_obj = Profile.objects.filter(forget_password_token = token).first()
+#         context = {'email' : profile_obj}
         
-        if request.method == 'POST':
-            new_password = request.POST.get('new_password')
-            confirm_password = request.POST.get('reconfirm_password')
-            email = request.POST.get('email')
+#         if request.method == 'POST':
+#             new_password = request.POST.get('new_password')
+#             confirm_password = request.POST.get('reconfirm_password')
+#             email = request.POST.get('email')
             
-            if email is  None:
-                messages.success(request, 'No email found.')
-                return redirect(f'/change-password/{token}/')
+#             if email is  None:
+#                 messages.success(request, 'No email found.')
+#                 return redirect(f'/change-password/{token}/')
                 
             
-            if  new_password != confirm_password:
-                messages.success(request, 'both should  be equal.')
-                return redirect(f'/change-password/{token}/')
+#             if  new_password != confirm_password:
+#                 messages.success(request, 'both should  be equal.')
+#                 return redirect(f'/change-password/{token}/')
                          
             
-            user_obj = Admin.objects.get(id = email)
-            user_obj.set_password(new_password)
-            user_obj.save()
-            return redirect('/login/')
+#             user_obj = Admin.objects.get(id = email)
+#             user_obj.set_password(new_password)
+#             user_obj.save()
+#             return redirect('/login/')
             
             
             
         
         
-    except Exception as e:
-        print(e)
-    return render(request , 'change-password.html' , context)
+#     except Exception as e:
+#         print(e)
+#     return render(request , 'change-password.html' , context)
 
 
-def forget_password(request):
-    try:
-        if request.method == 'POST':
-            email = request.POST.get('email')
+# def forget_password(request):
+#     try:
+#         if request.method == 'POST':
+#             email = request.POST.get('email')
             
-            if not Admin.objects.filter(email=email).first():
-                messages.success(request, 'Not user found with this email.')
-                return redirect('/forget-password/')
+#             if not Admin.objects.filter(email=email).first():
+#                 messages.success(request, 'Not user found with this email.')
+#                 return redirect('/forget-password/')
             
-            user_obj = Admin.objects.get(email = email)
-            token = str(uuid.uuid4())
-            # profile_obj= Profile.objects.get(user = user_obj)
-            # profile_obj.forget_password_token = token
-            # profile_obj.save()
-            send_forget_password_mail(user_obj.email , token)
-            messages.success(request, 'We have sent you a password recovery email')
-            return redirect('/forget-password/')
+#             user_obj = Admin.objects.get(email = email)
+#             token = str(uuid.uuid4())
+#             # profile_obj= Profile.objects.get(user = user_obj)
+#             # profile_obj.forget_password_token = token
+#             # profile_obj.save()
+#             send_forget_password_mail(user_obj.email , token)
+#             messages.success(request, 'We have sent you a password recovery email')
+#             return redirect('/forget-password/')
                 
     
     
-    except Exception as e:
-        print(e)
-    return render(request , 'forget-password.html')
+#     except Exception as e:
+#         print(e)
+#     return render(request , 'forget-password.html')
 
 
 
